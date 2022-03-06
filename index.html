@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Videogainers Mouse Haunt</title>
+
+    <style>
+        .flexy {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-evenly;
+        }
+
+        .mt-30 {
+            margin-top: 30px;
+        }
+
+        .mt-20 {
+            margin-top: 20px;
+        }
+
+        .w-300 {
+            width: 300px;
+        }
+
+        .card {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+        }
+
+        .container {
+            padding: 2px 16px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="flexy w-300">
+        <div>
+            <label for="hat">Hat:</label></br>
+            <select name="hat" id="hat">
+                <option value=""></option>
+                <option value="Adventurer">Adventurer</option>
+                <option value="Artistic">Artistic</option>
+                <option value="Authoritarian">Authoritarian</option>
+                <option value="Brave">Brave</option>
+                <option value="Cleptomaniac">Cleptomaniac</option>
+                <option value="Clever">Clever</option>
+                <option value="Clumsy">Clumsy</option>
+                <option value="Commanding">Commanding</option>
+                <option value="Cooker">Cooker</option>
+                <option value="Cultural">Cultural</option>
+                <option value="Dancer">Dancer</option>
+                <option value="Driver">Driver</option>
+                <option value="Drunk">Drunk</option>
+                <option value="Faithful">Faithful</option>
+                <option value="Fanatical">Fanatical</option>
+                <option value="Fancy">Fancy</option>
+                <option value="Fatigued">Fatigued</option>
+                <option value="Foodie">Foodie</option>
+                <option value="Forgetful">Forgetful</option>
+                <option value="Friendly">Friendly</option>
+                <option value="Greedy">Greedy</option>
+                <option value="Heroic">Heroic</option>
+                <option value="Historical">Historical</option>
+                <option value="Imposing">Imposing</option>
+                <option value="Impulsive">Impulsive</option>
+                <option value="Insomniac">Insomniac</option>
+                <option value="Joyful">Joyful</option>
+                <option value="Lawful">Lawful</option>
+                <option value="Magical">Magical</option>
+                <option value="Manipulative">Manipulative</option>
+                <option value="Musical">Musical</option>
+                <option value="Nimble">Nimble</option>
+                <option value="Outdoorsy">Outdoorsy</option>
+                <option value="Scholar">Scholar</option>
+                <option value="Server">Server</option>
+                <option value="Shady">Shady</option>
+                <option value="Short Tempered">Short Tempered</option>
+                <option value="Slow">Slow</option>
+                <option value="Smelly">Smelly</option>
+                <option value="Smug">Smug</option>
+                <option value="Sporty">Sporty</option>
+                <option value="Star">Star</option>
+                <option value="Storyteller">Storyteller</option>
+                <option value="Stressed">Stressed</option>
+                <option value="Stubborn">Stubborn</option>
+                <option value="Unfaithful">Unfaithful</option>
+                <option value="Uniformed">Uniformed</option>
+                <option value="Unreliable">Unreliable</option>
+                <option value="Weirdo">Weirdo</option>
+                <option value="Workaholic">Workaholic</option>
+            </select>
+			
+            </br></br>
+			
+            <label for="Torso">Torso:</label></br>
+            <select name="torso" id="torso">
+                <option value=""></option>
+                <option value="Adventurer">Adventurer</option>
+                <option value="Artistic">Artistic</option>
+                <option value="Authoritarian">Authoritarian</option>
+                <option value="Brave">Brave</option>
+                <option value="Cleptomaniac">Cleptomaniac</option>
+                <option value="Clever">Clever</option>
+                <option value="Clumsy">Clumsy</option>
+                <option value="Commanding">Commanding</option>
+                <option value="Cooker">Cooker</option>
+                <option value="Cultural">Cultural</option>
+                <option value="Dancer">Dancer</option>
+                <option value="Driver">Driver</option>
+                <option value="Drunk">Drunk</option>
+                <option value="Faithful">Faithful</option>
+                <option value="Fanatical">Fanatical</option>
+                <option value="Fancy">Fancy</option>
+                <option value="Fatigued">Fatigued</option>
+                <option value="Foodie">Foodie</option>
+                <option value="Forgetful">Forgetful</option>
+                <option value="Friendly">Friendly</option>
+                <option value="Greedy">Greedy</option>
+                <option value="Heroic">Heroic</option>
+                <option value="Historical">Historical</option>
+                <option value="Imposing">Imposing</option>
+                <option value="Impulsive">Impulsive</option>
+                <option value="Insomniac">Insomniac</option>
+                <option value="Joyful">Joyful</option>
+                <option value="Lawful">Lawful</option>
+                <option value="Magical">Magical</option>
+                <option value="Manipulative">Manipulative</option>
+                <option value="Musical">Musical</option>
+                <option value="Nimble">Nimble</option>
+                <option value="Outdoorsy">Outdoorsy</option>
+                <option value="Scholar">Scholar</option>
+                <option value="Server">Server</option>
+                <option value="Shady">Shady</option>
+                <option value="Short Tempered">Short Tempered</option>
+                <option value="Slow">Slow</option>
+                <option value="Smelly">Smelly</option>
+                <option value="Smug">Smug</option>
+                <option value="Sporty">Sporty</option>
+                <option value="Star">Star</option>
+                <option value="Storyteller">Storyteller</option>
+                <option value="Stressed">Stressed</option>
+                <option value="Stubborn">Stubborn</option>
+                <option value="Unfaithful">Unfaithful</option>
+                <option value="Uniformed">Uniformed</option>
+                <option value="Unreliable">Unreliable</option>
+                <option value="Weirdo">Weirdo</option>
+                <option value="Workaholic">Workaholic</option>
+            </select>
+        </div>
+        <div class="mt-20">
+            <input type="checkbox" id="legendary" name="rarity" value="legendary" checked>
+            <label for="legendary"> Legendary</label></br>
+            <input type="checkbox" id="epic" name="rarity" value="epic" checked>
+            <label for="epic"> Epic</label></br>
+            <input type="checkbox" id="rare" name="rarity" value="rare" checked>
+            <label for="rare"> Rare</label></br>
+            <input type="checkbox" id="common" name="rarity" value="common" checked>
+            <label for="common"> Common</label></br></br>
+        </div>
+    </div>
+    <div>
+        <input id="btn_search" type="submit" value="Search">
+        <div class="flexy mt-30" id="result">
+
+        </div>
+        <h4 id="error_msg"></h4>
+    </div>
+
+    <script>
+		//TZN 
+        const result = document.getElementById("result");
+        const hat = document.getElementById("hat");
+        const torso = document.getElementById("torso");
+        const error = document.getElementById("error_msg");
+        const btn_search = document.getElementById("btn_search");
+        const rarity_cbs = document.getElementsByName("rarity");
+
+        btn_search.onclick = () => {
+            const rarity_search = [];
+
+            for (let i = 0; i < rarity_cbs.length; ++i) {
+                rarity_cbs[i].checked && rarity_search.push('"' + rarity_cbs[i].value + '"');
+            }
+
+            const domain = `https://marketplace.api.mousehaunt.com/orders/search?asset_type=mouse&rarities=[${encodeURIComponent(rarity_search)}]+&status=open&offset=0&limit=99999999999&price_order=asc`;
+            search(domain, hat.value.trim().toLowerCase(), torso.value.trim().toLowerCase());
+        };
+
+        const search = (url, hat, torso) => {
+            result.innerHTML = 'Loading...';
+            error.innerHTML = '';
+
+            fetch(url).then(response => {
+                return response.json();
+            }).then(data => {
+                const hat_filtered_rat = hat.length ? data.results.filter(topo => topo.mouse_traits.filter(tratto => tratto.trait_type == 'Hat' && tratto.value.toLowerCase() == hat).length) : data.results;
+                const torso_filtered_rat = torso.length ? hat_filtered_rat.filter(topo => topo.mouse_traits.filter(tratto => tratto.trait_type == 'Torso' && tratto.value.toLowerCase() == torso).length) : hat_filtered_rat;
+                result.innerHTML = torso_filtered_rat.length ?
+                    torso_filtered_rat.map(topo =>
+                        `<div class="card">
+                            <img loading="lazy" width="100%" height="150px" src="${topo.mouse_image_url}" alt="Mouse ${topo.id}">
+                            <div class="container">
+                                <h4><b>NFT ID: <a href="https://mousehaunt.com/marketplace/orders/${topo.id}" target="blank">${topo.mouse_nft_id}</a></b></h4>
+                                <h4><b>RARITY: ${topo.mouse_rarity}</b></h4> 
+                                <h5>${topo.mouse_traits.filter(tratto => tratto.display_type == 'outfit').map(tratto => tratto.value)}</h5> 
+                                <h4><b>PRICE: ${(topo.price_in_wei * 1e-18).toFixed(2)}</b> MHT</h4> 
+                            </div>
+                        </div>`
+                    ) : 'No Rat Found';
+            }).catch(err => {
+                error.innerHTML = err.message;
+                result.innerHTML = '';
+            });
+        };
+    </script>
+</body>
+
+</html>
