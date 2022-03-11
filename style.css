@@ -1,0 +1,42 @@
+.skip-nav { 
+  padding-top: 70px; 
+}
+
+svg {
+    cursor: pointer;
+}
+
+.unselectable {
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+
+.filter-container {
+  width: 100%;
+  max-width: 480px;
+}
+
+label.btn-check-custom {
+  padding: 8px;
+  border-radius: 8px;
+}
+
+.rat-card {
+  max-width: 250px;
+}
+
+.rat-img {
+  max-width: 100%;
+}
+
+#result {
+  gap: 20px;
+}
+
+@media screen and (max-width: 768px) {
+  svg { 
+    width: 20px;
+  }
+}
