@@ -125,6 +125,10 @@
 
                     div.appendChild(input);
                     div.appendChild(label);
+                    input.onclick = function (e) {
+                        this.blur();
+                    };
+
                     dom_parent_element.appendChild(div);
                 }
             };
@@ -180,6 +184,11 @@
                 torso.value = '';
                 set_all_checkbox(rarity_cbs_list, true);
             };
+
+            btn_cross_search.onclick = function (e) {
+                this.blur();
+            };
+
 
             const print_result = filtered_rats => {
                 if (!filtered_rats.length) {

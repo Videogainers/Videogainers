@@ -21,6 +21,7 @@ svg {
 label.btn-check-custom {
   padding: 8px;
   border-radius: 8px;
+  cursor: pointer;
 }
 
 .rat-card {
