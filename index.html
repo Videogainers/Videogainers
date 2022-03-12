@@ -8,10 +8,14 @@
     <title>Videogainers Traits Finder</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <link href="style.css" rel="stylesheet">
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/drilldown.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+
 </head>
 
 <body>
@@ -51,8 +55,8 @@
         </div>
     </nav>
     <div class="skip-nav container-fluid">
-        <div class="row">
-            <div class="filter-container">
+        <div class="row gap-3 justify-content-center">
+            <div class="panel-container">
                 <div class="card">
                     <div class="card-header">
                         <h5>Filters</h5>
@@ -82,15 +86,26 @@
                         <div id="rarity_checkboxes" class="form-check-inline d-flex justify-content-between mt-4">
                         </div>
                     </div>
+                    <div class="card-footer d-flex justify-content-between p-4 w-100">
+                        <button id="btn_reset" class="btn btn-outline-danger">RESET</button>
+                        <button id="btn_search" class="btn btn-outline-dark">SEARCH</button>
+                    </div>
                 </div>
-                <div class="card-footer d-flex justify-content-between p-3 w-100">
-                    <button id="btn_reset" class="btn btn-outline-danger">RESET</button>
-                    <button id="btn_search" class="btn btn-outline-dark">SEARCH</button>
+            </div>
+            <div class="panel-container">
+                <div class="card h-100">
+                    <div class="card-body p-0">
+                        <div class="d-flex align-items-center justify-content-center h-100" id="pie_chart_container">
+                            <h4>Waiting For A Search</h4>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div id="result" class="row mt-4 justify-content-center">
-            <h4 id="error_msg"></h4>
+        <div class="row">
+            <div id="result" class="row mt-4 justify-content-center">
+                <h4 id="error_msg"></h4>
+            </div>
         </div>
     </div>
     <script>
@@ -125,12 +140,23 @@
 
                     div.appendChild(input);
                     div.appendChild(label);
+
                     input.onclick = function (e) {
                         this.blur();
                     };
 
                     dom_parent_element.appendChild(div);
                 }
+            };
+
+            const build_traits_map = traits => {
+                const traits_map = {};
+
+                for (const trait of traits) {
+                    traits_map[trait] = {};
+                }
+
+                return traits_map;
             };
 
             const traits = ['', 'Adventurer', 'Artistic', 'Authoritarian', 'Brave', 'Cleptomaniac', 'Clever', 'Clumsy', 'Commanding', 'Cooker', 'Cultural', 'Dancer',
@@ -179,13 +205,13 @@
 
             btn_reset.onclick = () => {
                 result.innerHTML = '';
-                error.innerText = '';
+                error.innerHTML = '';
                 hat.value = '';
                 torso.value = '';
                 set_all_checkbox(rarity_cbs_list, true);
             };
 
-            btn_cross_search.onclick = function (e) {
+            btn_cross_search.onchange = function (e) {
                 this.blur();
             };
 
@@ -213,35 +239,154 @@
                 result.innerHTML = 'Loading...';
                 error.innerHTML = '';
 
+                const traits_map = build_traits_map(traits);
+
                 fetch(url).then(response => {
                     return response.json();
                 }).then(data => {
                     const filtered_rats = data.results.filter(rat => {
-                        let hat_check = true;
-                        let torso_check = true;
-
-                        if (hat.length && torso.length && hat == torso) {
-                            torso_check = rat.mouse_traits.filter(trait => trait.value.toLowerCase() == torso).length == 2;
-                        }
-                        else if (btn_cross_search.checked) {
-                            hat_check = !hat.length || rat.mouse_traits.some(trait => trait.value.toLowerCase() == hat);
-                            torso_check = !torso.length || rat.mouse_traits.some(trait => trait.value.toLowerCase() == torso);
-                        } else {
-                            hat_check = !hat.length || rat.mouse_traits.some(trait => trait.trait_type == 'Hat' && trait.value.toLowerCase() == hat);
-                            torso_check = !torso.length || rat.mouse_traits.some(trait => trait.trait_type == 'Torso' && trait.value.toLowerCase() == torso);
-                        }
-
+                        fill_traits_map(rat, traits_map);
+                        const [hat_check, torso_check] = check_traits_conditions(hat, torso, rat);
                         return hat_check && torso_check;
                     });
 
+                    const chart_traits_pie = build_and_fill_pie_chart(traits_map);
+
                     print_result(filtered_rats);
                 }).catch(err => {
+                    console.error(err);
                     error.innerHTML = err.message;
                     result.innerHTML = '';
                 });
             };
+
+            const check_traits_conditions = (hat, torso, rat) => {
+                let hat_check = true;
+                let torso_check = true;
+
+                if (hat.length && torso.length && hat == torso) {
+                    torso_check = rat.mouse_traits.filter(trait => trait.value.toLowerCase() == torso).length == 2;
+                }
+                else if (btn_cross_search.checked) {
+                    hat_check = !hat.length || rat.mouse_traits.some(trait => trait.value.toLowerCase() == hat);
+                    torso_check = !torso.length || rat.mouse_traits.some(trait => trait.value.toLowerCase() == torso);
+                } else {
+                    hat_check = !hat.length || rat.mouse_traits.some(trait => trait.trait_type == 'Hat' && trait.value.toLowerCase() == hat);
+                    torso_check = !torso.length || rat.mouse_traits.some(trait => trait.trait_type == 'Torso' && trait.value.toLowerCase() == torso);
+                }
+
+                return [hat_check, torso_check];
+            };
+
+            const fill_traits_map = (rat, traits_map) => {
+                const outfit = rat.mouse_traits.filter(trait => trait.display_type == "outfit");
+
+                switch (outfit.length) {
+                    case 0:
+                        !traits_map[""].hasOwnProperty("") && (traits_map[""][""] = 0);
+                        traits_map[""][""] += 1;
+                        break;
+                    case 1:
+                        !traits_map[outfit[0].value].hasOwnProperty(outfit[0].value) && (traits_map[outfit[0].value][outfit[0].value] = 0);
+                        traits_map[outfit[0].value][outfit[0].value] += 1;
+                        break;
+                    case 2:
+                        !traits_map[outfit[0].value].hasOwnProperty(`${outfit[0].value}-${outfit[1].value}`) && (traits_map[outfit[0].value][`${outfit[0].value}-${outfit[1].value}`] = 0);
+                        traits_map[outfit[0].value][`${outfit[0].value}-${outfit[1].value}`] += 1;
+
+                        if (outfit[0].value != outfit[1].value) {
+                            !traits_map[outfit[1].value].hasOwnProperty(`${outfit[1].value}-${outfit[0].value}`) && (traits_map[outfit[1].value][`${outfit[1].value}-${outfit[0].value}`] = 0);
+                            traits_map[outfit[1].value][`${outfit[1].value}-${outfit[0].value}`] += 1;
+                        }
+                        break;
+                };
+            };
+
+            const build_and_fill_pie_chart = traits_map => {
+                const serie_data = [];
+                const drilldown_serie = [];
+
+                for (const trait in traits_map) {
+                    serie_data.push({
+                        name: trait,
+                        drilldown: trait,
+                        y: sumArray(Object.values(traits_map[trait]))
+                    });
+
+                    const drilldown_data = [];
+
+                    for (const couple in traits_map[trait]) {
+                        drilldown_data.push([couple, traits_map[trait][couple]]);
+                    }
+
+                    drilldown_serie.push({
+                        name: trait,
+                        id: trait,
+                        data: drilldown_data
+                    });
+                }
+
+                return build_pie_chart(serie_data, drilldown_serie);
+            };
+
+            function sumArray(array) {
+                let result = 0;
+
+                for (const current of array) {
+                    result += current;
+                }
+
+                return result;
+            }
+
+            function build_pie_chart(serie_data, drilldown_serie) {
+                return Highcharts.chart('pie_chart_container', {
+                    chart: {
+                        type: 'pie'
+                    },
+                    title: {
+                        text: 'TRAITS PAIRS - RARITY BASED'
+                    },
+                    subtitle: {
+                        text: 'Click on a trait to see the pairs'
+                    },
+
+                    accessibility: {
+                        announceNewData: {
+                            enabled: true
+                        },
+                        point: {
+                            valueSuffix: '#'
+                        }
+                    },
+
+                    plotOptions: {
+                        series: {
+                            dataLabels: {
+                                enabled: true,
+                                format: '{point.name}: {point.y}'
+                            }
+                        }
+                    },
+
+                    tooltip: {
+                        headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+                        pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y}</b><br/>'
+                    },
+
+                    series: [{
+                        name: "Traits",
+                        colorByPoint: true,
+                        data: serie_data || []
+                    }],
+                    drilldown: {
+                        series: drilldown_serie
+                    }
+                });
+            };
         })();
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

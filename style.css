@@ -2,7 +2,7 @@
   padding-top: 70px; 
 }
 
-svg {
+.navbar-nav svg {
     cursor: pointer;
 }
 
@@ -13,9 +13,10 @@ svg {
     -ms-user-select: none;
 }
 
-.filter-container {
+.panel-container {
   width: 100%;
   max-width: 480px;
+  height: 410px;
 }
 
 label.btn-check-custom {
@@ -37,7 +38,7 @@ label.btn-check-custom {
 }
 
 @media screen and (max-width: 768px) {
-  svg { 
+  .navbar-nav svg { 
     width: 20px;
   }
 }
