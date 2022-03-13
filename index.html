@@ -251,7 +251,6 @@
                     });
 
                     const chart_traits_pie = build_and_fill_pie_chart(traits_map);
-
                     print_result(filtered_rats);
                 }).catch(err => {
                     console.error(err);
@@ -265,14 +264,14 @@
                 let torso_check = true;
 
                 if (hat.length && torso.length && hat == torso) {
-                    torso_check = rat.mouse_traits.filter(trait => trait.value.toLowerCase() == torso).length == 2;
+                    torso_check = rat.mouse_traits.filter(trait => trait.display_type == 'outfit' && trait.value.toLowerCase() == torso).length == 2;
                 }
                 else if (btn_cross_search.checked) {
-                    hat_check = !hat.length || rat.mouse_traits.some(trait => trait.value.toLowerCase() == hat);
-                    torso_check = !torso.length || rat.mouse_traits.some(trait => trait.value.toLowerCase() == torso);
+                    hat_check = !hat.length || rat.mouse_traits.some(trait => trait.display_type == 'outfit' && trait.value.toLowerCase() == hat);
+                    torso_check = !torso.length || rat.mouse_traits.some(trait => trait.display_type == 'outfit' && trait.value.toLowerCase() == torso);
                 } else {
-                    hat_check = !hat.length || rat.mouse_traits.some(trait => trait.trait_type == 'Hat' && trait.value.toLowerCase() == hat);
-                    torso_check = !torso.length || rat.mouse_traits.some(trait => trait.trait_type == 'Torso' && trait.value.toLowerCase() == torso);
+                    hat_check = !hat.length || rat.mouse_traits.some(trait => trait.display_type == 'outfit' && trait.trait_type == 'Hat' && trait.value.toLowerCase() == hat);
+                    torso_check = !torso.length || rat.mouse_traits.some(trait => trait.display_type == 'outfit' && trait.trait_type == 'Torso' && trait.value.toLowerCase() == torso);
                 }
 
                 return [hat_check, torso_check];
