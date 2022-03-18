@@ -103,9 +103,8 @@
             </div>
         </div>
         <div class="row">
-            <div id="result" class="row mt-4 justify-content-center">
-                <h4 id="error_msg"></h4>
-            </div>
+            <div id="result" class="row mt-4 justify-content-center"></div>
+            <div id="error_msg" class="row mt-4 justify-content-center"></div>
         </div>
     </div>
     <script>
@@ -224,11 +223,11 @@
 
                 result.innerHTML = filtered_rats.map(rat =>
                     `<div class="card rat-card">
-                        <img loading="lazy" class="rat-img" src="${rat.mouse_image_url}" alt="Mouse ${rat.id}">
+                        <img loading="lazy" class="rat-img" src="${rat.image_url}" alt="Mouse ${rat.id}">
                         <div class="container">
-                            <h5><b>NFT ID: <a href="https://mousehaunt.com/marketplace/orders/${rat.id}" target="blank">${rat.mouse_nft_id}</a></b></h5>
-                            <h5><b>RARITY: ${rat.mouse_rarity}</b></h5> 
-                            <h6>${rat.mouse_traits.filter(traits => traits.display_type == 'outfit').map(traits => traits.value)}</h6> 
+                            <h5><b>NFT ID: <a href="https://mousehaunt.com/marketplace/orders/${rat.id}" target="blank">${rat.nft_id}</a></b></h5>
+                            <h5><b>RARITY: ${rat.rarity}</b></h5> 
+                            <h6>${rat.traits.filter(traits => traits.display_type == 'outfit').map(traits => traits.value)}</h6> 
                             <h5><b>PRICE: ${(rat.price_in_wei * 1e-18).toFixed(2)}</b> MHT</h5> 
                         </div>
                     </div>`
@@ -244,6 +243,7 @@
                 fetch(url).then(response => {
                     return response.json();
                 }).then(data => {
+                    console.log(data.results);
                     const filtered_rats = data.results.filter(rat => {
                         fill_traits_map(rat, traits_map);
                         const [hat_check, torso_check] = check_traits_conditions(hat, torso, rat);
@@ -254,7 +254,7 @@
                     print_result(filtered_rats);
                 }).catch(err => {
                     console.error(err);
-                    error.innerHTML = err.message;
+                    error.innerHTML = '<h4>The mice ate too much cheese! </br> They\'ll be back after a siesta!</h4>';
                     result.innerHTML = '';
                 });
             };
@@ -264,21 +264,21 @@
                 let torso_check = true;
 
                 if (hat.length && torso.length && hat == torso) {
-                    torso_check = rat.mouse_traits.filter(trait => trait.display_type == 'outfit' && trait.value.toLowerCase() == torso).length == 2;
+                    torso_check = rat.traits.filter(trait => trait.display_type == 'outfit' && trait.value.toLowerCase() == torso).length == 2;
                 }
                 else if (btn_cross_search.checked) {
-                    hat_check = !hat.length || rat.mouse_traits.some(trait => trait.display_type == 'outfit' && trait.value.toLowerCase() == hat);
-                    torso_check = !torso.length || rat.mouse_traits.some(trait => trait.display_type == 'outfit' && trait.value.toLowerCase() == torso);
+                    hat_check = !hat.length || rat.traits.some(trait => trait.display_type == 'outfit' && trait.value.toLowerCase() == hat);
+                    torso_check = !torso.length || rat.traits.some(trait => trait.display_type == 'outfit' && trait.value.toLowerCase() == torso);
                 } else {
-                    hat_check = !hat.length || rat.mouse_traits.some(trait => trait.display_type == 'outfit' && trait.trait_type == 'Hat' && trait.value.toLowerCase() == hat);
-                    torso_check = !torso.length || rat.mouse_traits.some(trait => trait.display_type == 'outfit' && trait.trait_type == 'Torso' && trait.value.toLowerCase() == torso);
+                    hat_check = !hat.length || rat.traits.some(trait => trait.display_type == 'outfit' && trait.trait_type == 'Hat' && trait.value.toLowerCase() == hat);
+                    torso_check = !torso.length || rat.traits.some(trait => trait.display_type == 'outfit' && trait.trait_type == 'Torso' && trait.value.toLowerCase() == torso);
                 }
 
                 return [hat_check, torso_check];
             };
 
             const fill_traits_map = (rat, traits_map) => {
-                const outfit = rat.mouse_traits.filter(trait => trait.display_type == "outfit");
+                const outfit = rat.traits.filter(trait => trait.display_type == "outfit");
 
                 switch (outfit.length) {
                     case 0:
