@@ -1,16 +1,16 @@
-.skip-nav { 
-  padding-top: 70px; 
+.skip-nav {
+  padding-top: 70px;
 }
 
 .navbar-nav svg {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .unselectable {
-    user-select: none;
-    -moz-user-select: none;
-    -webkit-user-select: none;
-    -ms-user-select: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
 }
 
 .panel-container {
@@ -38,7 +38,7 @@ label.btn-check-custom {
 }
 
 @media screen and (max-width: 768px) {
-  .navbar-nav svg { 
-    width: 20px;
+  .navbar-nav svg {
+    width: 18px;
   }
 }
