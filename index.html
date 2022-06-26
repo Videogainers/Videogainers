@@ -167,7 +167,7 @@
 
             const traits = ['', 'Adventurer', 'Artistic', 'Authoritarian', 'Brave', 'Cleptomaniac', 'Clever', 'Clumsy', 'Commanding', 'Cooker', 'Cultural', 'Dancer',
                 'Driver', 'Drunk', 'Faithful', 'Fanatical', 'Fancy', 'Fatigued', 'Foodie', 'Forgetful', 'Friendly', 'Greedy', 'Heroic', 'Historical', 'Imposing',
-                'Impulsive', 'Insomniac', 'Joyful', 'Lawful', 'Magical', 'Manipulative', 'Musical', 'Nimble', 'Outdoorsy', 'Scholar', 'Server', 'Shady', 'Short Tempered',
+                'Impulsive', 'Insomniac', 'Joyful', 'Lawful', 'Legendary', 'Magical', 'Manipulative', 'Musical', 'Nimble', 'Outdoorsy', 'Scholar', 'Server', 'Shady', 'Short Tempered',
                 'Slow', 'Smelly', 'Smug', 'Sporty', 'Star', 'Storyteller', 'Stressed', 'Stubborn', 'Unfaithful', 'Uniformed', 'Unreliable', 'Weirdo', 'Workaholic'
             ];
 
@@ -285,7 +285,7 @@
 
             const fill_traits_map = (rat, traits_map) => {
                 const outfit = rat.traits.filter(trait => trait.display_type == "outfit");
-
+                console.log(rat, traits_map);
                 switch (outfit.length) {
                     case 0:
                         !traits_map[""].hasOwnProperty("") && (traits_map[""][""] = 0);
