@@ -285,26 +285,30 @@
 
             const fill_traits_map = (rat, traits_map) => {
                 const outfit = rat.traits.filter(trait => trait.display_type == "outfit");
-                console.log(rat, traits_map);
-                switch (outfit.length) {
-                    case 0:
-                        !traits_map[""].hasOwnProperty("") && (traits_map[""][""] = 0);
-                        traits_map[""][""] += 1;
-                        break;
-                    case 1:
-                        !traits_map[outfit[0].value].hasOwnProperty(outfit[0].value) && (traits_map[outfit[0].value][outfit[0].value] = 0);
-                        traits_map[outfit[0].value][outfit[0].value] += 1;
-                        break;
-                    case 2:
-                        !traits_map[outfit[0].value].hasOwnProperty(`${outfit[0].value}-${outfit[1].value}`) && (traits_map[outfit[0].value][`${outfit[0].value}-${outfit[1].value}`] = 0);
-                        traits_map[outfit[0].value][`${outfit[0].value}-${outfit[1].value}`] += 1;
 
-                        if (outfit[0].value != outfit[1].value) {
-                            !traits_map[outfit[1].value].hasOwnProperty(`${outfit[1].value}-${outfit[0].value}`) && (traits_map[outfit[1].value][`${outfit[1].value}-${outfit[0].value}`] = 0);
-                            traits_map[outfit[1].value][`${outfit[1].value}-${outfit[0].value}`] += 1;
-                        }
-                        break;
-                };
+                try {
+                    switch (outfit.length) {
+                        case 0:
+                            !traits_map[""].hasOwnProperty("") && (traits_map[""][""] = 0);
+                            traits_map[""][""] += 1;
+                            break;
+                        case 1:
+                            !traits_map[outfit[0].value].hasOwnProperty(outfit[0].value) && (traits_map[outfit[0].value][outfit[0].value] = 0);
+                            traits_map[outfit[0].value][outfit[0].value] += 1;
+                            break;
+                        case 2:
+                            !traits_map[outfit[0].value].hasOwnProperty(`${outfit[0].value}-${outfit[1].value}`) && (traits_map[outfit[0].value][`${outfit[0].value}-${outfit[1].value}`] = 0);
+                            traits_map[outfit[0].value][`${outfit[0].value}-${outfit[1].value}`] += 1;
+
+                            if (outfit[0].value != outfit[1].value) {
+                                !traits_map[outfit[1].value].hasOwnProperty(`${outfit[1].value}-${outfit[0].value}`) && (traits_map[outfit[1].value][`${outfit[1].value}-${outfit[0].value}`] = 0);
+                                traits_map[outfit[1].value][`${outfit[1].value}-${outfit[0].value}`] += 1;
+                            }
+                            break;
+                    };
+                } catch (err) {
+                    console.log('Rat trait mapping failed', rat);
+                }
             };
 
             const build_and_fill_pie_chart = traits_map => {
